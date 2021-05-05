@@ -44,8 +44,8 @@
       </div>
     </section> -->
     <section class="text-gray-600 body-font">
-      <div class="container px-0 py-24 mx-auto">
-        <div class="w-full pr-0">
+      <div class="container px-0 py-24 mx-auto flex">
+        <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-">
           <table class="table-fixed text-left shadow-lg bg-white">
             <thead class="w-full pr-0">
               <tr>
@@ -74,6 +74,26 @@
             </tbody>
           </table>
         </div>
+        <div
+          class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 curated"
+        >
+          <h2 class="text-gray-900 text-lg font-medium title-font mb-5">
+            Curated Tech Jobs
+          </h2>
+          <div class="relative mb-4 text-left">
+            <div
+              v-for="extJob in ExternalJobs"
+              :key="extJob.id"
+              @click="showExternalJob(extJob.id)"
+              class="cursor-pointer border px-2 py-4 flex justify-between extjob"
+            >
+              <p class="font-bold text-sm w-2/5">
+                {{ extJob.company }}
+              </p>
+              <p class="w-3/5">{{ extJob.title }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -81,44 +101,58 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Jobs",
   data() {
     return {
-      jobs: [],
+      externalJobs: null,
     };
   },
   created() {
     this.GetJobs();
+    this.GetExternalJobs();
   },
   computed: {
-    ...mapGetters({ Jobs: "StateJobs", User: "StateUser" }),
+    ...mapGetters({
+      Jobs: "StateJobs",
+      User: "StateUser",
+      ExternalJobs: "StateExternalJobs",
+    }),
   },
   methods: {
-    ...mapActions(["GetJobs"]),
-    // getAllJobs() {
-    //   axios
-    //     .get("jobs")
-    //     .then((response) => {
-    //       this.jobs = response.data;
-    //     })
-    //     .catch((e) => {
-    //       alert(e);
-    //     });
-    // },
+    ...mapActions(["GetJobs", "GetExternalJobs"]),
+
     stripText: function (description) {
       if (description.length > 40) {
         return description.slice(0, 40) + "...";
       }
       return description;
     },
-
     showJob(_id) {
       this.$router.push({
         name: "showJob",
         params: { id: _id },
       });
+    },
+    showExternalJob(id) {
+      this.$router.push({
+        name: "showExternalJob",
+        params: { id: id },
+      });
+    },
+
+    fetchRemoteJobs() {
+      axios
+        .get("/external")
+        .then((res) => {
+          this.externalJobs = res.data;
+          console.log(this.externalJobs);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     },
   },
 };
@@ -128,5 +162,12 @@ export default {
 <style scoped>
 table tbody tr:hover td {
   background-color: rgb(178, 240, 255);
+}
+.extjob:hover {
+  background-color: rgb(178, 240, 255);
+}
+.curated {
+  height: 400px;
+  overflow-y: scroll;
 }
 </style>

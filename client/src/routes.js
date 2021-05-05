@@ -30,6 +30,12 @@ const routes = [
 		props:true,
 	},
 	{
+		path:'/external-jobs/:id',
+		name: 'showExternalJob',
+		component: () => import('./views/ExternalJob.vue'),
+		props:true,
+	},
+	{
     path: '/admin/manage-jobs',
     name: 'jobManager',
     component: () => import('./views/JobManager.vue'),

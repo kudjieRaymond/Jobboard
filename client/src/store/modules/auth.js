@@ -3,10 +3,12 @@ import axios from 'axios';
 const state = {
 	user: null,
   jobs: null,
+	externalJobs:null
 };
 const getters = {
 	isAuthenticated: state => !!state.user,    
   StateJobs: state => state.jobs,
+	StateExternalJobs: state => state.externalJobs,
   StateUser: state => state.user,
 };
 const actions = {
@@ -30,7 +32,13 @@ const actions = {
 	},
 	async GetJobs({commit}){
 		let response = await axios.get('jobs')
+
 		commit('setJobs', response.data)
+	},
+	async GetExternalJobs({commit}){
+		let response = await axios.get('external')
+		console.log(response.data)
+		commit('setExternalJobs', response.data)
 	},
 	async DestroyJob({dispatch} , id){
 		await axios.delete(`/jobs/${id}`)
@@ -49,7 +57,9 @@ const mutations = {
     },
     setJobs(state, jobs){
         state.jobs = jobs
-				console.log(state.jobs)
+    },
+		setExternalJobs(state, jobs){
+        state.externalJobs = jobs
     },
     logout(state){
         state.user = null

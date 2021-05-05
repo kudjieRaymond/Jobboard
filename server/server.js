@@ -38,10 +38,19 @@ mongoose
 		process.exit();
 	});
 
-app.get("/", (req, res) => {
-	res.json({
-		message: "Welcome to job board application.",
-	});
+const axios = require("axios");
+
+app.get("/external", (req, res) => {
+	axios
+		.get("https://jobs.github.com/positions.json")
+		.then((response) => {
+			res.json(response.data);
+		})
+		.catch((error) => {
+			console.log(error);
+
+			res.status(500).send(error);
+		});
 });
 
 require("./app/routes/job.routes")(app);
