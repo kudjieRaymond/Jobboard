@@ -115,13 +115,14 @@ export default {
     };
   },
   created() {
+    this.GetUserJobs();
     this.GetJobs();
   },
   computed: {
-    ...mapGetters({ Jobs: "StateJobs", User: "StateUser" }),
+    ...mapGetters({ Jobs: "StateUserJobs", User: "StateUser" }),
   },
   methods: {
-    ...mapActions(["CreateJob", "GetJobs"]),
+    ...mapActions(["CreateJob", "GetUserJobs", "GetJobs"]),
 
     stripText: function (description) {
       if (description.length > 40) {

@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
 const cors = require("cors");
 
 // create express app
@@ -16,6 +18,7 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -53,9 +56,9 @@ app.get("/external", (req, res) => {
 		});
 });
 
-require("./app/routes/job.routes")(app);
 require("./app/routes/auth.routes")(app);
 const { verify } = require("./app/middleware/auth.middleware");
+require("./app/routes/job.routes")(app, verify);
 
 // listen for requests
 app.listen(port, () => {

@@ -23,7 +23,6 @@ exports.create = (req, res) => {
 			message: "Job url is required",
 		});
 	}
-
 	//create job
 	const job = new Job({
 		title: req.body.title,
@@ -31,6 +30,7 @@ exports.create = (req, res) => {
 		company: req.body.company,
 		salary: req.body.salary || "Not Specified",
 		url: req.body.url,
+		user: req.user._id,
 	});
 
 	job
@@ -48,6 +48,18 @@ exports.create = (req, res) => {
 // Retrieve and return all jobs from the database.
 exports.findAll = (req, res) => {
 	Job.find()
+		.then((jobs) => {
+			res.send(jobs);
+		})
+		.catch((err) => {
+			res.status(500).send({
+				message: err.message || "Some error occurred while retrieving jobs.",
+			});
+		});
+};
+
+exports.findAllUserJobs = (req, res) => {
+	Job.find({ user: req.user._id })
 		.then((jobs) => {
 			res.send(jobs);
 		})

@@ -3,13 +3,11 @@
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
       <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
         <h1 class="title-font font-medium text-3xl text-gray-900">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          Reach the largest workforce community on the web
         </h1>
         <p class="leading-relaxed mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat
+          We have over 5000 daily active users. Post your Job Ad Now to have
+          access to a pool of talented individuals
         </p>
       </div>
       <div
@@ -67,7 +65,7 @@
           class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
           @click.prevent="submit"
         >
-          Login
+          Register
         </button>
       </div>
     </div>
@@ -97,30 +95,12 @@ export default {
           password: this.password,
           email: this.email,
         });
-        this.$router.push("/jobs");
+        this.$router.push("/admin/manage-jobs");
       } catch (err) {
         alert(err.response.data.message);
         console.log(err.response.data);
       }
     },
-
-    // register() {
-    //   console.log(this.firstname);
-    //   axios
-    //     .post("http://localhost:3000/register", {
-    //       firstname: this.firstname,
-    //       lastname: this.lastname,
-    //       password: this.password,
-    //       email: this.email,
-    //     })
-    //     .then(() => {
-    //       alert("user logged in");
-    //     })
-    //     .catch((err) => {
-    //       alert(err.data);
-    //       console.log(err.data);
-    //     });
-    // },
   },
 };
 </script>

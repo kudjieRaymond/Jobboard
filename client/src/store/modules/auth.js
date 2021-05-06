@@ -9,6 +9,8 @@ const getters = {
 	isAuthenticated: state => !!state.user,    
   StateJobs: state => state.jobs,
 	StateExternalJobs: state => state.externalJobs,
+	StateUserJobs: state => state.userJobs,
+
   StateUser: state => state.user,
 };
 const actions = {
@@ -28,12 +30,18 @@ const actions = {
 	},
 	async CreateJob({dispatch}, job) {
 		await axios.post('jobs', job)
+		await dispatch('GetUserJobs')	
 		await dispatch('GetJobs')
 	},
 	async GetJobs({commit}){
 		let response = await axios.get('jobs')
 
 		commit('setJobs', response.data)
+	},
+	async GetUserJobs({commit}){
+		let response = await axios.get('jobs/user')
+		console.log(response.data)
+		commit('setUserJobs', response.data)
 	},
 	async GetExternalJobs({commit}){
 		let response = await axios.get('external')
@@ -42,11 +50,13 @@ const actions = {
 	},
 	async DestroyJob({dispatch} , id){
 		await axios.delete(`/jobs/${id}`)
+		await dispatch('UserJobs')	
 		await dispatch('GetJobs')
 	},
 
 	async updateJob({dispatch}, job){	
 		await axios.put(`/jobs/${job.id}`, job)
+		await dispatch('GetUserJobs')	
 		await dispatch('GetJobs')			
 	}
 
@@ -60,6 +70,9 @@ const mutations = {
     },
 		setExternalJobs(state, jobs){
         state.externalJobs = jobs
+    },
+		setUserJobs(state, jobs){
+        state.userJobs = jobs
     },
     logout(state){
         state.user = null

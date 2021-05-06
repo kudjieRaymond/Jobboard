@@ -7,6 +7,10 @@ const JobSchema = mongoose.Schema(
 		description: String,
 		salary: String,
 		url: String,
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+		},
 	},
 	{
 		timestamps: true,
