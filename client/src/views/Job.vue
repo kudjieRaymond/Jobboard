@@ -47,7 +47,7 @@
           <span
             class="inline-block h-1 w-10 rounded bg-indigo-500 mt-8 mb-6"
           ></span>
-          <p class="leading-relaxed text-lg">
+          <p class="leading-relaxed text-left text-lg">
             {{ job.description }}
           </p>
           <p class="my-10 cursor-pointer">
