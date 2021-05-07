@@ -5,7 +5,9 @@ module.exports = (app, verify) => {
 	app.post("/jobs", verify, jobs.create);
 
 	//get all jobs
-	app.get("/jobs", verify, jobs.findAll);
+	app.get("/jobs", jobs.findAll);
+
+	app.get("/jobs/external", jobs.external);
 
 	//get user jobs
 	app.get("/jobs/user", verify, jobs.findAllUserJobs);

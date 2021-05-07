@@ -41,21 +41,6 @@ mongoose
 		process.exit();
 	});
 
-const axios = require("axios");
-
-app.get("/external", (req, res) => {
-	axios
-		.get("https://jobs.github.com/positions.json")
-		.then((response) => {
-			res.json(response.data);
-		})
-		.catch((error) => {
-			console.log(error);
-
-			res.status(500).send(error);
-		});
-});
-
 require("./app/routes/auth.routes")(app);
 const { verify } = require("./app/middleware/auth.middleware");
 require("./app/routes/job.routes")(app, verify);

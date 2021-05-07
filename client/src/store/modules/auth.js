@@ -44,7 +44,7 @@ const actions = {
 		commit('setUserJobs', response.data)
 	},
 	async GetExternalJobs({commit}){
-		let response = await axios.get('external')
+		let response = await axios.get('jobs/external')
 		console.log(response.data)
 		commit('setExternalJobs', response.data)
 	},

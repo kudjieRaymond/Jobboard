@@ -145,7 +145,7 @@ export default {
 
     fetchRemoteJobs() {
       axios
-        .get("/external")
+        .get("/jobs/external")
         .then((res) => {
           this.externalJobs = res.data;
           console.log(this.externalJobs);

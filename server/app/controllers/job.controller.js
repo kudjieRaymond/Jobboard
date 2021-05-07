@@ -1,4 +1,5 @@
 const Job = require("../models/job.models");
+const axios = require("axios");
 
 // Create and Save a new Job
 exports.create = (req, res) => {
@@ -169,5 +170,18 @@ exports.delete = (req, res) => {
 			return res.status(500).send({
 				message: "Could not delete job with id " + req.params.jobId,
 			});
+		});
+};
+
+exports.external = (req, res) => {
+	axios
+		.get("https://jobs.github.com/positions.json")
+		.then((response) => {
+			return res.json(response.data);
+		})
+		.catch((error) => {
+			console.log(error);
+
+			return res.status(500).send(error);
 		});
 };

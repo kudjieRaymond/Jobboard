@@ -63,10 +63,5 @@ export default {
       return job;
     },
   },
-  methods: {
-    strippedString(htmlString) {
-      return htmlString.replace("/(<([^>]+)>)/gi", "");
-    },
-  },
 };
 </script>
